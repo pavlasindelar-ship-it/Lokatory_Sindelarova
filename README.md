@@ -1,0 +1,1 @@
+# Lokatory_Sindelarova
