@@ -19,7 +19,7 @@ test("homework 2", async ({ page }) => {
     await page.locator("input#password").fill("Pavla12345");
     await page.locator("input#password-confirm").fill("Pavla12345");
     await page.locator(".btn-primary").click();
-    await expect(page).toHaveURL("https://team8-2022brno.herokuapp.com/zaci");
+    await expect(page.locator("text=Účet s tímto emailem již existuje")).toBeVisible();
 });
 
 test("homework 3", async ({ page }) => {
@@ -30,5 +30,6 @@ test("homework 3", async ({ page }) => {
     await page.locator("input#password").fill("12345");
     await page.locator("input#password-confirm").fill("12345");
     await page.locator(".btn-primary").click();
-    await expect(page).toHaveURL("https://team8-2022brno.herokuapp.com/zaci");
+    await expect(page.locator("text=Heslo musí obsahovat minimálně 6 znaků, velké i malé písmeno a číslici")).toBeVisible();
 });
+
