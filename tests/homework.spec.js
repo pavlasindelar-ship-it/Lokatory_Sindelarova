@@ -7,27 +7,21 @@ const {
     USER_EMAIL,
     USER_PASSWORD,
     INVALID_USER_PASSWORD,
-    EMAIL_WITHOUT_DOMAIN,
-    EMAIL_DOMAIN,
 }= process.env
-
-function createNewEmail() {
-    return EMAIL_WITHOUT_DOMAIN + Date.now() + EMAIL_DOMAIN;
-}
 
 test.describe("registration page", () => {
 
-    let registrationPageObject;
+    let registrationPage;
     
     test.beforeEach(async ({ page }) => {
-        registrationPageObject = new RegistrationPage(page);
-        registrationPageObject.openPage();
+        registrationPage = new RegistrationPage(page);
+        await registrationPage.openPage();
     }); 
 
     test("valid registration", { tag: ["@happyway", "@valid"] }, async ({ page }) => {
-        await registrationPageObject.register({
+        await registrationPage.register({
           name: USER_USERNAME,
-          email: createNewEmail(), 
+          email: registrationPage.emailGenerator.createNewEmail(), 
           userPassword: USER_PASSWORD, 
           confirmPassword: USER_PASSWORD
         });
@@ -35,7 +29,7 @@ test.describe("registration page", () => {
     });
 
     test("invalid registration with existing mail", { tag: "@invalid" }, async ({ page }) => {
-        await registrationPageObject.register({
+        await registrationPage.register({
           name: USER_USERNAME,
           email: USER_EMAIL, 
           userPassword: USER_PASSWORD, 
@@ -45,9 +39,9 @@ test.describe("registration page", () => {
     });
 
     test("invalid registration with incorrect password", { tag: "@invalid" }, async ({ page }) => {
-        await registrationPageObject.register({
+        await registrationPage.register({
           name: USER_USERNAME,
-          email: createNewEmail(), 
+          email: registrationPage.emailGenerator.createNewEmail(), 
           userPassword: INVALID_USER_PASSWORD, 
           confirmPassword: INVALID_USER_PASSWORD
         });
@@ -55,9 +49,9 @@ test.describe("registration page", () => {
     });
     
     test("invalid registration with incorrect confirmation", { tag: "@invalid" }, async ({ page }) => {
-        await registrationPageObject.register({
+        await registrationPage.register({
           name: USER_USERNAME,
-          email: createNewEmail(), 
+          email: registrationPage.emailGenerator.createNewEmail(), 
           userPassword: USER_PASSWORD,
           confirmPassword: INVALID_USER_PASSWORD
         });
