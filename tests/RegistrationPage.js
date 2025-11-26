@@ -1,10 +1,12 @@
-import { UrlPage } from "./UrlPage.js";
+import { UrlPage, EmailGenerator } from "./UrlPage.js";
 
 export class RegistrationPage extends UrlPage {
 
-        constructor(page) {
+    constructor(page) {
         
-        super(page);    
+        super(page); 
+        
+        this.emailGenerator = new EmailGenerator();
 
         this.nameInput = page.locator("input#name");
         this.emailInput = page.locator("input#email");
@@ -30,3 +32,4 @@ export class RegistrationPage extends UrlPage {
     }
    
 }
+
